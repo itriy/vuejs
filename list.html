@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue list</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    
+</head>
+<body>
+    <div id="app">
+        <users-list :list="list" @remove-user="removeUser"></users-list>
+        <users-form @add-user="addUser"></users-form>
+    </div>
+
+    <template id="users-component">
+      <table class="table">
+        <tr>
+          <th>Users({{ list.length }})</th>
+          <th></th>
+        </tr>
+        <tr v-for="item in list" :key="item.name">
+          <td scope="row">
+            {{ item.name }}
+          </td>
+          <td scope="row">
+            {{ item.age }}
+          </td>
+          <td>
+            <button type="button" class="btn btn-danger" @click="remove(item.name)">
+              X
+            </button>
+          </td>
+        </tr>
+      </table>
+    </template>
+
+    <template id="users-form">
+      <form class="form-inline">
+        <input type="text" name="" required class="form-control" v-model="newName" placeholder="name">
+        <input type="number" name="" class="form-control" v-model="newAge" placeholder="age">
+        <button type="button" class="btn btn-primary" @click="add()">OK</button>
+      </form>
+    </template>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script>
+        var usersList = {
+          name: 'UsersList',
+          template: '#users-component',
+          props: {
+            list: {
+              type: Array,
+              required: true
+            }
+          },
+          methods: {
+            remove(name) {
+              this.$emit('remove-user', name);
+            }
+          }
+        };
+
+        var UsersForm = {
+          name: 'UsersForm',
+          template: '#users-form',
+
+          data() {
+            return {
+              newName: '',
+              newAge: ''
+            };
+          },
+
+          methods: {
+            add() {
+              this.$emit('add-user', {
+                    name: this.newName,
+                    age: this.newAge
+              });
+
+              this.newName = '';
+              this.newAge = '';
+            }
+          }
+
+
+        };
+
+        var app = new Vue({
+            el: '#app',
+            components: {
+              'users-list': usersList,
+              'users-form': UsersForm
+            },
+            data() {
+                return {
+                  list: [
+                   { name: 'Саня', age: 33 },
+                   { name: 'Вася', age: 33 },
+                   { name: 'Петя', age: 33 },
+                   { name: 'Федя', age: 33 },
+                   { name: 'Боря', age: 33 }
+                  ]
+                }
+
+            },
+            methods: {
+              addUser(newUser){
+                console.log(newUser)
+
+                if(newUser.name) this.list.push(newUser)
+                
+              },
+
+              removeUser(name) {
+                this.list = this.list.filter(item => item.name !== name);
+              }
+            }
+          });
+    </script>
+</body>
+</html>
