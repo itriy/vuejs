@@ -12,7 +12,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="item in filteredUsers" v-bind:key="item._id">
+      <tr v-for="item in filteredUsers" :key="item._id">
         <td>{{ item.index + 1 }}</td>
         <td>{{ item.name }}</td>
         <td>{{ item.age }}</td>
@@ -57,6 +57,7 @@ export default {
     total: function() {
       return this.users.length;
     },
+    
     filteredUsers: function () {
 
       if (this.quantity === -1) {

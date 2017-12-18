@@ -1,8 +1,8 @@
 <template>
   <ul class=" pagination">
-    <li class="page-item" ><a class='page-link' @click="quantity(5)" href="#">5</a></li>
-    <li class="page-item" ><a class='page-link' @click="quantity(10)" href="#">10</a></li>
-    <li class="page-item" ><a class='page-link' @click="quantity(-1)" href="#">all</a></li>
+    <li class="page-item" ><span class='page-link' @click="quantity(5)">5</span></li>
+    <li class="page-item" ><span class='page-link' @click="quantity(10)">10</span></li>
+    <li class="page-item" ><span class='page-link' @click="quantity(-1)">all</span></li>
   </ul>
 </template>
 
