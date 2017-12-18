@@ -11,7 +11,6 @@ export default {
   name: 'UserListQuantity',
   methods: {
     quantity(value){
-      // console.log(value)
       this.$emit('users-quantity', value);
     }
   }

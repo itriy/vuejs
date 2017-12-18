@@ -4,7 +4,7 @@
       <tr>
         <th>#</th>
         <th>Имя</th>
-        <th>Баланс</th>
+        <th>Влзраст</th>
         <th>Email</th>
         <th>Пол</th>
         <th>Инфо</th>
@@ -15,7 +15,7 @@
       <tr v-for="item in filteredUsers" v-bind:key="item._id">
         <td>{{ item.index + 1 }}</td>
         <td>{{ item.name }}</td>
-        <td>{{ item.balance }}</td>
+        <td>{{ item.age }}</td>
         <td>{{ item.email }}</td>
         <td>{{ item.gender }}</td>
         <td>{{ item.about }}</td>

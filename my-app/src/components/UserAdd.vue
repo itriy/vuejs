@@ -1,33 +1,39 @@
-<template id="users-form">
-  <form class="form-inline">
-    <input type="text" name="" required class="form-control" v-model="newName" placeholder="name">
-    <input type="number" name="" class="form-control" v-model="newAge" placeholder="age">
-    <button type="button" class="btn btn-primary" @click="add()">OK</button>
-  </form>
+<template>
+  <user-form @add-user="addUser"></user-form>
 </template>
 
 <script>
+import axios from 'axios'
+import UserForm from '@/components/UserForm'
+
 export default {
   name: 'UserAdd',
-  template: '#users-form',
+  components: {
+    'user-form': UserForm
+  },
 
   data() {
     return {
-      newName: '',
-      newAge: ''
+      users: []
     };
   },
 
   methods: {
-    add() {
-      this.$emit('add-user', {
-            name: this.newName,
-            age: this.newAge
-      });
+    loadData: function() {
+      axios.get('http://localhost:3004/users')
+        .then((response) => {
+          this.users = response.data;
+        })
+    },
 
-      this.newName = '';
-      this.newAge = '';
-    }
+    addUser(newUser){
+      this.users.push(newUser);
+      console.log(this.users)
+    },
+  },
+
+  mounted: function () {
+    this.loadData();
   }
 }
 </script>
