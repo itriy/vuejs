@@ -2,22 +2,26 @@
   <div>
     <h2>Список пользователей</h2>
 
-    <user-list v-if="users.length" v-bind:users="users"></user-list>
+    <user-list-quantity @users-quantity="usersQuantity"></user-list-quantity>
+    <user-list v-if="users.length" :users="users" @remove-user="removeUser" :quantity='listQuantity'></user-list>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import UserList from '@/components/UserList'
+import UserListQuantity from '@/components/UserListQuantity'
 
 export default {
   name: 'UsersPage',
   components: {
-    'user-list': UserList
+    'user-list': UserList,
+    'user-list-quantity': UserListQuantity
   },
   data: function() {
     return {
-      users: []
+      users: [],
+      listQuantity: -1
     };
   },
   methods: {
@@ -26,6 +30,12 @@ export default {
         .then((response) => {
           this.users = response.data;
         })
+    },
+    removeUser(id) {
+      this.users = this.users.filter(item => item._id !== id);
+    },
+    usersQuantity(value) {
+      this.listQuantity = value;
     }
   },
   mounted: function () {
